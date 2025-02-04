@@ -1,5 +1,6 @@
 package com.example.api_cinematix.domain.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -23,5 +24,6 @@ public class MovieProductionCompany {
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "idMovie", referencedColumnName = "idMovie")
+    @JsonIgnore
     private Movie movie;
 }

@@ -49,5 +49,5 @@ public class Movie {
     private Set<MovieGenre> genres;
 
     @OneToMany(mappedBy = "movie", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private Set<MovieProductionCompany> productionCompanies;
+    private Set<MovieProductionCompany> production_companies;
 }
