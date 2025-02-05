@@ -35,6 +35,15 @@ public class MovieService {
                 .map(movie -> getMoviesDetails(movie.getId())).toList() : List.of();
     }
 
+    public List<MovieRequest> findUpcomingMovies() {
+        String url = "https://api.themoviedb.org/3/movie/upcoming?api_key=" + apiKey;
+
+        TmdbResponse response = restTemplate.getForObject(url, TmdbResponse.class);
+
+        return response != null ? Arrays.stream(response.getResults())
+                .map(movie -> getMoviesDetails(movie.getId())).toList() : List.of();
+    }
+
     private MovieRequest getMoviesDetails(long movieId) {
         String detailUrl = "https://api.themoviedb.org/3/movie/" + movieId + "?api_key=" + apiKey;
         return restTemplate.getForObject(detailUrl, MovieRequest.class);

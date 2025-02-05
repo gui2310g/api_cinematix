@@ -21,4 +21,9 @@ public class MovieController {
     public ResponseEntity<List<MovieRequest>> FindPopularMovies() {
         return ResponseEntity.ok(movieService.findPopularMovies());
     }
+
+    @GetMapping("/upcoming")
+    public ResponseEntity<List<MovieRequest>> FindUpcomingMovies() {
+        return ResponseEntity.ok(movieService.findUpcomingMovies());
+    }
 }
