@@ -44,6 +44,24 @@ public class MovieService {
                 .map(movie -> getMoviesDetails(movie.getId())).toList() : List.of();
     }
 
+    public List<MovieRequest> findTopRatedMovies() {
+        String url = "https://api.themoviedb.org/3/movie/top_rated?api_key=" + apiKey;
+
+        TmdbResponse response = restTemplate.getForObject(url, TmdbResponse.class);
+
+        return response != null ? Arrays.stream(response.getResults())
+                .map(movie -> getMoviesDetails(movie.getId())).toList() : List.of();
+    }
+
+    public List<MovieRequest> findNowPlayingMovies() {
+        String url = "https://api.themoviedb.org/3/movie/now_playing?api_key=" + apiKey;
+
+        TmdbResponse response = restTemplate.getForObject(url, TmdbResponse.class);
+
+        return response != null ? Arrays.stream(response.getResults())
+                .map(movie -> getMoviesDetails(movie.getId())).toList() : List.of();
+    }
+
     private MovieRequest getMoviesDetails(long movieId) {
         String detailUrl = "https://api.themoviedb.org/3/movie/" + movieId + "?api_key=" + apiKey;
         return restTemplate.getForObject(detailUrl, MovieRequest.class);

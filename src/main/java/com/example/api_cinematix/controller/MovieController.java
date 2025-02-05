@@ -17,6 +17,7 @@ public class MovieController {
     @Autowired
     private MovieService movieService;
 
+    /* movies list */
     @GetMapping("/popular")
     public ResponseEntity<List<MovieRequest>> FindPopularMovies() {
         return ResponseEntity.ok(movieService.findPopularMovies());
@@ -25,5 +26,15 @@ public class MovieController {
     @GetMapping("/upcoming")
     public ResponseEntity<List<MovieRequest>> FindUpcomingMovies() {
         return ResponseEntity.ok(movieService.findUpcomingMovies());
+    }
+
+    @GetMapping("/toprated")
+    public ResponseEntity<List<MovieRequest>> FindTopRatedMovies() {
+        return ResponseEntity.ok(movieService.findTopRatedMovies());
+    }
+
+    @GetMapping("/nowplaying")
+    public ResponseEntity<List<MovieRequest>> FindNowPlayingMovies() {
+        return ResponseEntity.ok(movieService.findNowPlayingMovies());
     }
 }
