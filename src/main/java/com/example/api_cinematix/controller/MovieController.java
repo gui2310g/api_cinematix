@@ -4,9 +4,7 @@ import com.example.api_cinematix.domain.service.MovieService;
 import com.example.api_cinematix.dto.MovieRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -36,5 +34,15 @@ public class MovieController {
     @GetMapping("/nowplaying")
     public ResponseEntity<List<MovieRequest>> FindNowPlayingMovies() {
         return ResponseEntity.ok(movieService.findNowPlayingMovies());
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<MovieRequest> FindById(@PathVariable Long id) {
+        return ResponseEntity.ok(movieService.findById(id));
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity<List<MovieRequest>> findMoviesByTitle(@RequestParam String query) {
+        return ResponseEntity.ok(movieService.findMoviesByTitle(query));
     }
 }
