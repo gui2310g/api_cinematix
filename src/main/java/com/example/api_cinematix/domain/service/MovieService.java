@@ -1,7 +1,9 @@
 package com.example.api_cinematix.domain.service;
 
-import com.example.api_cinematix.dto.MovieRequest;
-import com.example.api_cinematix.dto.TmdbResponse;
+import com.example.api_cinematix.dto.request.MovieRequest;
+import com.example.api_cinematix.dto.request.ActorRequest;
+import com.example.api_cinematix.dto.response.TmdbCreditsResponse;
+import com.example.api_cinematix.dto.response.TmdbResponse;
 import com.example.api_cinematix.mappers.MovieMapper;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -13,7 +15,7 @@ import java.util.List;
 @Service
 public class MovieService {
 
-    private RestTemplate restTemplate;
+    private final RestTemplate restTemplate;
 
     private MovieMapper mapper;
 
@@ -62,12 +64,16 @@ public class MovieService {
 
     public MovieRequest findById(Long id) {
         String url = "https://api.themoviedb.org/3/movie/ " + id + "?api_key=" + apiKey;
+        return restTemplate.getForObject(url, MovieRequest.class);
+    }
 
-        MovieRequest response = restTemplate.getForObject(url, MovieRequest.class);
+    public List<ActorRequest> findActorsByMovie(Long id) {
+        String url = "https://api.themoviedb.org/3/movie/" + id + "/credits?api_key=" + apiKey;
 
-        if (response == null) throw new RuntimeException("Movie not found in TMDB");
+        TmdbCreditsResponse response = restTemplate.getForObject(url, TmdbCreditsResponse.class);
 
-        return response;
+        return response != null ? Arrays.stream(response.getCast())
+                .map(actor -> getActorsDetails(actor.getId())).toList() : List.of();
     }
 
     public List<MovieRequest> findMoviesByTitle(String query) {
@@ -82,5 +88,10 @@ public class MovieService {
     private MovieRequest getMoviesDetails(long movieId) {
         String detailUrl = "https://api.themoviedb.org/3/movie/" + movieId + "?api_key=" + apiKey;
         return restTemplate.getForObject(detailUrl, MovieRequest.class);
+    }
+
+    private ActorRequest getActorsDetails(long actorId) {
+        String detailUrl = "https://api.themoviedb.org/3/person/" + actorId + "?api_key=" + apiKey;
+        return restTemplate.getForObject(detailUrl, ActorRequest.class);
     }
 }

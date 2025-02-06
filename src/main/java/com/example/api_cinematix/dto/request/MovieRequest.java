@@ -1,4 +1,4 @@
-package com.example.api_cinematix.dto;
+package com.example.api_cinematix.dto.request;
 
 import com.example.api_cinematix.domain.model.MovieGenre;
 import com.example.api_cinematix.domain.model.MovieProductionCompany;

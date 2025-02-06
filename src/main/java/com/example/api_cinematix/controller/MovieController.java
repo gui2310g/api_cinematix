@@ -1,7 +1,8 @@
 package com.example.api_cinematix.controller;
 
 import com.example.api_cinematix.domain.service.MovieService;
-import com.example.api_cinematix.dto.MovieRequest;
+import com.example.api_cinematix.dto.request.MovieRequest;
+import com.example.api_cinematix.dto.request.ActorRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -44,5 +45,10 @@ public class MovieController {
     @GetMapping("/search")
     public ResponseEntity<List<MovieRequest>> findMoviesByTitle(@RequestParam String query) {
         return ResponseEntity.ok(movieService.findMoviesByTitle(query));
+    }
+
+    @GetMapping("/credits/{id}")
+    public ResponseEntity<List<ActorRequest>> findActorsByMovie(@PathVariable Long id) {
+        return ResponseEntity.ok(movieService.findActorsByMovie(id));
     }
 }
