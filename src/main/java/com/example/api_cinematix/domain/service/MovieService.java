@@ -78,6 +78,7 @@ public class MovieService {
                 .map(actor -> getActorsDetails(actor.getId())).toList() : List.of();
     }
 
+
     public List<MovieRequest> findMoviesByTitle(String query) {
         String searchUrl = "https://api.themoviedb.org/3/search/movie?query=" + query + "&api_key=" + apiKey;
 
