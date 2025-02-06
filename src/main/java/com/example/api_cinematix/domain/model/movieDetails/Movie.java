@@ -1,4 +1,4 @@
-package com.example.api_cinematix.domain.model;
+package com.example.api_cinematix.domain.model.movieDetails;
 
 import jakarta.persistence.*;
 import lombok.Data;

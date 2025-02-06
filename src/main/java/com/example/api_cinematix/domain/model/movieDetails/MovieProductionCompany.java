@@ -1,4 +1,4 @@
-package com.example.api_cinematix.domain.model;
+package com.example.api_cinematix.domain.model.movieDetails;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;

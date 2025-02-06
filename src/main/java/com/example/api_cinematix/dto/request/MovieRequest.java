@@ -1,7 +1,7 @@
 package com.example.api_cinematix.dto.request;
 
-import com.example.api_cinematix.domain.model.MovieGenre;
-import com.example.api_cinematix.domain.model.MovieProductionCompany;
+import com.example.api_cinematix.domain.model.movieDetails.MovieGenre;
+import com.example.api_cinematix.domain.model.movieDetails.MovieProductionCompany;
 import lombok.Data;
 
 import java.util.Set;

@@ -3,7 +3,7 @@ package com.example.api_cinematix.dto.request;
 import lombok.Data;
 
 @Data
-public class ActorRequest {
+public class MovieActorRequest {
     private Long id;
 
     private String name;
