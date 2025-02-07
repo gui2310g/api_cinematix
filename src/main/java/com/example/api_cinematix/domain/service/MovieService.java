@@ -1,5 +1,6 @@
 package com.example.api_cinematix.domain.service;
 
+import com.example.api_cinematix.domain.util.TmdbUtil;
 import com.example.api_cinematix.dto.request.MovieRequest;
 import com.example.api_cinematix.dto.request.MovieActorRequest;
 import com.example.api_cinematix.dto.request.MovieVideoRequest;
@@ -21,11 +22,14 @@ public class MovieService {
 
     private MovieMapper mapper;
 
+    private TmdbUtil tmdbUtil;
+
     @Value("${tmdb.api.key}")
     private String apiKey;
 
-    public MovieService(RestTemplate restTemplate) {
+    public MovieService(RestTemplate restTemplate, TmdbUtil tmdbUtil) {
         this.restTemplate = restTemplate;
+        this.tmdbUtil = tmdbUtil;
     }
 
     public List<MovieRequest> findPopularMovies() {
@@ -34,7 +38,7 @@ public class MovieService {
         TmdbResponse response = restTemplate.getForObject(url, TmdbResponse.class);
 
         return response != null ? Arrays.stream(response.getResults())
-                .map(movie -> getMoviesDetails(movie.getId())).toList() : List.of();
+                .map(movie -> tmdbUtil.getMoviesDetails(movie.getId())).toList() : List.of();
     }
 
     public List<MovieRequest> findUpcomingMovies() {
@@ -43,7 +47,7 @@ public class MovieService {
         TmdbResponse response = restTemplate.getForObject(url, TmdbResponse.class);
 
         return response != null ? Arrays.stream(response.getResults())
-                .map(movie -> getMoviesDetails(movie.getId())).toList() : List.of();
+                .map(movie -> tmdbUtil.getMoviesDetails(movie.getId())).toList() : List.of();
     }
 
     public List<MovieRequest> findTopRatedMovies() {
@@ -52,7 +56,7 @@ public class MovieService {
         TmdbResponse response = restTemplate.getForObject(url, TmdbResponse.class);
 
         return response != null ? Arrays.stream(response.getResults())
-                .map(movie -> getMoviesDetails(movie.getId())).toList() : List.of();
+                .map(movie -> tmdbUtil.getMoviesDetails(movie.getId())).toList() : List.of();
     }
 
     public List<MovieRequest> findNowPlayingMovies() {
@@ -61,7 +65,7 @@ public class MovieService {
         TmdbResponse response = restTemplate.getForObject(url, TmdbResponse.class);
 
         return response != null ? Arrays.stream(response.getResults())
-                .map(movie -> getMoviesDetails(movie.getId())).toList() : List.of();
+                .map(movie -> tmdbUtil.getMoviesDetails(movie.getId())).toList() : List.of();
     }
 
     public MovieRequest findById(Long id) {
@@ -69,23 +73,13 @@ public class MovieService {
         return restTemplate.getForObject(url, MovieRequest.class);
     }
 
-    public List<MovieActorRequest> findActorsByMovie(Long id) {
-        String url = "https://api.themoviedb.org/3/movie/" + id + "/credits?api_key=" + apiKey;
-
-        TmdbCreditsResponse response = restTemplate.getForObject(url, TmdbCreditsResponse.class);
-
-        return response != null ? Arrays.stream(response.getCast())
-                .map(actor -> getActorsDetails(actor.getId())).toList() : List.of();
-    }
-
-
     public List<MovieRequest> findMoviesByTitle(String query) {
         String searchUrl = "https://api.themoviedb.org/3/search/movie?query=" + query + "&api_key=" + apiKey;
 
         TmdbResponse response = restTemplate.getForObject(searchUrl, TmdbResponse.class);
 
         return response != null ? Arrays.stream(response.getResults())
-                .map(movie -> getMoviesDetails(movie.getId())).toList() : List.of();
+                .map(movie -> tmdbUtil.getMoviesDetails(movie.getId())).toList() : List.of();
     }
 
     public List<MovieVideoRequest> findVideosByMovie(Long movieId) {
@@ -94,15 +88,5 @@ public class MovieService {
         TmdbVideosResponse response = restTemplate.getForObject(detailUrl, TmdbVideosResponse.class);
 
         return response != null ? Arrays.stream(response.getResults()).toList() : List.of();
-    }
-
-    private MovieRequest getMoviesDetails(long movieId) {
-        String detailUrl = "https://api.themoviedb.org/3/movie/" + movieId + "?api_key=" + apiKey;
-        return restTemplate.getForObject(detailUrl, MovieRequest.class);
-    }
-
-    private MovieActorRequest getActorsDetails(long actorId) {
-        String detailUrl = "https://api.themoviedb.org/3/person/" + actorId + "?api_key=" + apiKey;
-        return restTemplate.getForObject(detailUrl, MovieActorRequest.class);
     }
 }

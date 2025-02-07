@@ -48,11 +48,6 @@ public class MovieController {
         return ResponseEntity.ok(movieService.findMoviesByTitle(query));
     }
 
-    @GetMapping("/credits/{id}")
-    public ResponseEntity<List<MovieActorRequest>> findActorsByMovie(@PathVariable Long id) {
-        return ResponseEntity.ok(movieService.findActorsByMovie(id));
-    }
-
     @GetMapping("/videos/{id}")
     public ResponseEntity<List<MovieVideoRequest>> findVideosbyMovie(@PathVariable Long id) {
         return ResponseEntity.ok(movieService.findVideosByMovie(id));
