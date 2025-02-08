@@ -1,0 +1,30 @@
+package com.example.api_cinematix.domain.service;
+
+import com.example.api_cinematix.domain.model.User;
+import com.example.api_cinematix.domain.model.movieDetails.Movie;
+import com.example.api_cinematix.domain.repository.UserRepository;
+import com.example.api_cinematix.dto.request.MovieRequest;
+import com.example.api_cinematix.dto.request.UserRequest;
+import com.example.api_cinematix.mappers.UserMapper;
+import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.Date;
+
+@Service
+@AllArgsConstructor
+public class UserService {
+
+    private final UserRepository userRepository;
+
+    private final UserMapper userMapper;
+
+    public UserRequest createUser(UserRequest userRequest) {
+        User user = userMapper.toEntity(userRequest);
+        user.setCreated_at(new Date());
+        User createdUser = userRepository.save(user);
+        return userMapper.toRequest(createdUser);
+    }
+}
