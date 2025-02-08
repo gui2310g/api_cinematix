@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.List;
 
 @Service
 @AllArgsConstructor
@@ -26,5 +27,13 @@ public class UserService {
         user.setCreated_at(new Date());
         User createdUser = userRepository.save(user);
         return userMapper.toRequest(createdUser);
+    }
+
+    public List<UserRequest> findAll() {
+        return userRepository.findAll().stream().map(userMapper::toRequest).toList();
+    }
+
+    public UserRequest findById(Long id) {
+        return userRepository.findById(id).map(userMapper::toRequest).orElse(null);
     }
 }
