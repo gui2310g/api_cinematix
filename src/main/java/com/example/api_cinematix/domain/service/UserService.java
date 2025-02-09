@@ -36,4 +36,17 @@ public class UserService {
     public UserRequest findById(Long id) {
         return userRepository.findById(id).map(userMapper::toRequest).orElse(null);
     }
+
+    public UserRequest updateUser(Long id, UserRequest userRequest) {
+        User user = userRepository.findById(id).orElseThrow(() -> new RuntimeException("User not found"));
+        user.setUsername(userRequest.getUsername());
+        user.setEmail(userRequest.getEmail());
+        user.setPassword(userRequest.getPassword());
+        User updatedUser = userRepository.save(user);
+        return userMapper.toRequest(updatedUser);
+    }
+
+    public void delete(Long id) {
+        userRepository.deleteById(id);
+    }
 }
