@@ -1,5 +1,6 @@
 package com.example.api_cinematix.domain.service;
 
+import com.example.api_cinematix.domain.exception.ResourceNotFoundException;
 import com.example.api_cinematix.domain.util.TmdbUtil;
 import com.example.api_cinematix.dto.request.MovieActorRequest;
 import com.example.api_cinematix.dto.request.MovieRequest;
@@ -37,7 +38,7 @@ public class MovieActorService {
         return restTemplate.getForObject(url, MovieActorRequest.class);
     }
 
-    public List<MovieRequest> findMoviesByActor(Long id) {
+    public List<MovieRequest> findMoviesByActor(Long id)  {
         String url = "https://api.themoviedb.org/3/person/" + id + "/movie_credits?api_key=" + apiKey;
 
         TmdbMoviesCreditsResponse response = restTemplate.getForObject(url, TmdbMoviesCreditsResponse .class);

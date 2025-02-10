@@ -1,5 +1,6 @@
 package com.example.api_cinematix.domain.service;
 
+import com.example.api_cinematix.domain.exception.ResourceNotFoundException;
 import com.example.api_cinematix.domain.util.TmdbUtil;
 import com.example.api_cinematix.dto.request.MovieRequest;
 import com.example.api_cinematix.dto.request.MovieActorRequest;
