@@ -7,7 +7,6 @@ import com.example.api_cinematix.dto.request.MovieRequest;
 import com.example.api_cinematix.dto.response.TmdbCreditsResponse;
 import com.example.api_cinematix.dto.response.TmdbMoviesCreditsResponse;
 
-import com.example.api_cinematix.mappers.MovieMapper;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -20,8 +19,6 @@ import java.util.List;
 public class MovieActorService {
 
     private final RestTemplate restTemplate;
-
-    private MovieMapper mapper;
 
     private TmdbUtil tmdbUtil;
 

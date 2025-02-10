@@ -1,7 +1,5 @@
 package com.example.api_cinematix.dto.request;
 
-import com.example.api_cinematix.domain.model.movieDetails.MovieGenre;
-import com.example.api_cinematix.domain.model.movieDetails.MovieProductionCompany;
 import lombok.Data;
 
 import java.util.Set;
@@ -32,7 +30,7 @@ public class MovieRequest {
 
     private Double vote_average;
 
-    private Set<MovieGenre> genres;
+    private Set<MovieGenreRequest> genres;
 
-    private Set<MovieProductionCompany> production_companies;
+    private Set<MovieProductionCompanyRequest> production_companies;
 }
