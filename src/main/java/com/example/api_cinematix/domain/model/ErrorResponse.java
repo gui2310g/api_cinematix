@@ -4,11 +4,11 @@ import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
 public class ErrorResponse {
-    private String dataHora;
+    private String dateHour;
 
     private Integer status;
 
-    private String titulo;
+    private String title;
 
-    private String mensagem;
+    private String message;
 }

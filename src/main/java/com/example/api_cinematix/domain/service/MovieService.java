@@ -14,16 +14,19 @@ import java.util.Arrays;
 import java.util.List;
 
 @Service
-@RequiredArgsConstructor
 public class MovieService {
 
     private final RestTemplate restTemplate;
 
-    private TmdbUtil tmdbUtil;
+    private final TmdbUtil tmdbUtil;
 
     @Value("${tmdb.api.key}")
     private String apiKey;
 
+    public MovieService(RestTemplate restTemplate, TmdbUtil tmdbUtil) {
+        this.restTemplate = restTemplate;
+        this.tmdbUtil = tmdbUtil;
+    }
 
     public List<MovieRequest> findPopularMovies() {
         String url = "https://api.themoviedb.org/3/movie/popular?api_key=" + apiKey;
